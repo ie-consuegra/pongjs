@@ -21,6 +21,12 @@ class Player {
 const player1 = new Player(20, screenYHalf - 40);
 const player2 = new Player(screenWidth - 40, screenYHalf - 40);
 
+// Ball
+const ball = {
+  posX: 50,
+  posY: 180,
+};
+
 function render() {
   // Background
   ctxScreen.fillStyle = screenBackgroundColor;
@@ -43,7 +49,7 @@ function render() {
   ctxScreen.fillRect(player2.posX, player2.posY, player2.width, player2.height);
 
   // Ball
-  ctxScreen.fillRect(50, 50, 20, 20);
+  ctxScreen.fillRect(ball.posX, ball.posY, 20, 20);
 }
 
 render();
@@ -66,4 +72,31 @@ function playerMove(event) {
   render();
 }
 
+let directionX = 'right';
+// const directionY = 'line';
+
+function ballMove() {
+  switch (directionX) {
+    case 'right':
+      if (ball.posX < screenWidth) {
+        ball.posX += 5;
+      } else {
+        directionX = 'left';
+      }
+      break;
+    case 'left':
+      if (ball.posX > -20) {
+        ball.posX -= 5;
+      } else {
+        directionX = 'right';
+      }
+      break;
+    default:
+      break;
+  }
+  render();
+}
+
 document.addEventListener('keydown', playerMove);
+
+setInterval(ballMove, 40);
