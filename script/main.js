@@ -47,3 +47,23 @@ function render() {
 }
 
 render();
+
+function playerMove(event) {
+  switch (event.keyCode) {
+    case 38: // ArrowUp
+      if (player1.posY > 0) {
+        player1.posY -= 10;
+      }
+      break;
+    case 40: // ArrowDown
+      if (player1.posY < 320) {
+        player1.posY += 10;
+      }
+      break;
+    default:
+      break;
+  }
+  render();
+}
+
+document.addEventListener('keydown', playerMove);
