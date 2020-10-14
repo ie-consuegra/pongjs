@@ -7,6 +7,7 @@ const screenYHalf = screenHeight / 2;
 const screenXHalf = screenWidth / 2;
 const elementsOnScreenColor = '#FFF';
 const screenBackgroundColor = '#222';
+const playerFrameGap = 20;
 
 // Players
 class Player {
@@ -15,14 +16,16 @@ class Player {
     this.posY = posY;
     this.width = 20;
     this.height = 80;
+    this.entityWidth = this.width + playerFrameGap;
   }
 }
 
-const player1 = new Player(20, screenYHalf - 40);
+const player1 = new Player(playerFrameGap, screenYHalf - 40);
 const player2 = new Player(screenWidth - 40, screenYHalf - 40);
 
 // Ball
 const ball = {
+  side: 20,
   posX: 50,
   posY: 180,
 };
@@ -49,7 +52,7 @@ function render() {
   ctxScreen.fillRect(player2.posX, player2.posY, player2.width, player2.height);
 
   // Ball
-  ctxScreen.fillRect(ball.posX, ball.posY, 20, 20);
+  ctxScreen.fillRect(ball.posX, ball.posY, ball.side, ball.side);
 }
 
 render();
@@ -87,8 +90,16 @@ function ballMove() {
     case 'left':
       if (ball.posX > -20) {
         ball.posX -= 5;
+        // Ball touches the player1 paddle and bounces back
+        if (ball.posX === 40) {
+          if (ball.posY + ball.side >= player1.posY && ball.posY <= player1.posY + player1.height) {
+            directionX = 'right';
+            // Generate the bounce beep
+          }
+        }
       } else {
         directionX = 'right';
+        // player1 fails
       }
       break;
     default:
@@ -99,4 +110,4 @@ function ballMove() {
 
 document.addEventListener('keydown', playerMove);
 
-setInterval(ballMove, 40);
+setInterval(ballMove, 20);
