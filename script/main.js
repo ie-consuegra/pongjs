@@ -85,7 +85,36 @@ function playerStopMoving() {
 }
 
 let directionX = 'right';
-// const directionY = 'line';
+let directionY = 'none';
+
+function paddleHitsBall() {
+  switch (player1.directionY) {
+    case 'up':
+      directionY = 'up';
+      break;
+    case 'none':
+      directionY = 'none';
+      break;
+    case 'down':
+      directionY = 'down';
+      break;
+    default:
+      break;
+  }
+}
+
+function ballHitsFrame() {
+  switch (directionY) {
+    case 'up':
+      directionY = 'down';
+      break;
+    case 'down':
+      directionY = 'up';
+      break;
+    default:
+      break;
+  }
+}
 
 function ballMove() {
   switch (directionX) {
@@ -96,6 +125,7 @@ function ballMove() {
         if (ball.posX + ball.side === screenWidth - player2.entityWidth) {
           if (ball.posY + ball.side >= player2.posY && ball.posY <= player2.posY + player2.height) {
             directionX = 'left';
+            paddleHitsBall();
           }
         }
       } else {
@@ -109,7 +139,7 @@ function ballMove() {
         if (ball.posX === player1.entityWidth) {
           if (ball.posY + ball.side >= player1.posY && ball.posY <= player1.posY + player1.height) {
             directionX = 'right';
-            // Calculate where the ball hits to set direction
+            paddleHitsBall();
             // Generate the bounce beep
           }
         }
@@ -121,11 +151,35 @@ function ballMove() {
     default:
       break;
   }
+
+  switch (directionY) {
+    case 'up':
+      ball.posY -= 2;
+      break;
+    case 'none':
+      break;
+    case 'down':
+      ball.posY += 2;
+      break;
+    default:
+      break;
+  }
+
+  if (ball.posY === 0) {
+    ballHitsFrame();
+  } else if (ball.posY === 380) {
+    ballHitsFrame();
+  }
 }
 
 document.addEventListener('keydown', playerChangeDirection);
 
 document.addEventListener('keyup', playerStopMoving);
+
+function computerAI() {
+  player2.posY = ball.posY - 30;
+}
+
 
 setInterval(() => {
   ballMove();
@@ -139,5 +193,6 @@ setInterval(() => {
     default:
       break;
   }
+  computerAI();
   render();
 }, 20);
