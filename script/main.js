@@ -18,6 +18,18 @@ class Player {
     this.height = 80;
     this.entityWidth = this.width + playerFrameGap;
   }
+
+  moveUp() {
+    if (this.posY > 0) {
+      this.posY -= 10;
+    }
+  }
+
+  moveDown() {
+    if (this.posY < 320) {
+      this.posY += 10;
+    }
+  }
 }
 
 const player1 = new Player(playerFrameGap, screenYHalf - 40);
@@ -55,22 +67,21 @@ function render() {
   ctxScreen.fillRect(ball.posX, ball.posY, ball.side, ball.side);
 }
 
-function playerMove(event) {
+function playerChangeDirection(event) {
   switch (event.keyCode) {
     case 38: // ArrowUp
-      if (player1.posY > 0) {
-        player1.posY -= 10;
-      }
+      player1.directionY = 'up';
       break;
     case 40: // ArrowDown
-      if (player1.posY < 320) {
-        player1.posY += 10;
-      }
+      player1.directionY = 'down';
       break;
     default:
       break;
   }
-  render();
+}
+
+function playerStopMoving() {
+  player1.directionY = 'none';
 }
 
 let directionX = 'right';
@@ -110,9 +121,23 @@ function ballMove() {
     default:
       break;
   }
-  render();
 }
 
-document.addEventListener('keydown', playerMove);
+document.addEventListener('keydown', playerChangeDirection);
 
-setInterval(ballMove, 20);
+document.addEventListener('keyup', playerStopMoving);
+
+setInterval(() => {
+  ballMove();
+  switch (player1.directionY) {
+    case 'up':
+      player1.moveUp();
+      break;
+    case 'down':
+      player1.moveDown();
+      break;
+    default:
+      break;
+  }
+  render();
+}, 20);
