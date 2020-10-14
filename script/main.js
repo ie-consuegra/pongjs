@@ -83,6 +83,12 @@ function ballMove() {
     case 'right':
       if (ball.posX < screenWidth) {
         ball.posX += 5;
+        // Ball touches the player2 paddle and bounces
+        if (ball.posX + ball.side === screenWidth - player2.entityWidth) {
+          if (ball.posY + ball.side >= player2.posY && ball.posY <= player2.posY + player2.height) {
+            directionX = 'left';
+          }
+        }
       } else {
         directionX = 'left';
       }
@@ -91,9 +97,10 @@ function ballMove() {
       if (ball.posX > -20) {
         ball.posX -= 5;
         // Ball touches the player1 paddle and bounces back
-        if (ball.posX === 40) {
+        if (ball.posX === player1.entityWidth) {
           if (ball.posY + ball.side >= player1.posY && ball.posY <= player1.posY + player1.height) {
             directionX = 'right';
+            // Calculate where the ball hits to set direction
             // Generate the bounce beep
           }
         }
