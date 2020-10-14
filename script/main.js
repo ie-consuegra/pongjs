@@ -1,3 +1,5 @@
+// import SoundGen from './sound';
+
 // TV
 const screen = document.querySelector('canvas');
 const ctxScreen = screen.getContext('2d');
@@ -87,7 +89,8 @@ function playerStopMoving() {
 let directionX = 'right';
 let directionY = 'none';
 
-function paddleHitsBall() {
+function paddle1HitsBall() {
+  // Change this switch, just assign the values
   switch (player1.directionY) {
     case 'up':
       directionY = 'up';
@@ -101,6 +104,14 @@ function paddleHitsBall() {
     default:
       break;
   }
+}
+
+function paddle2HitsBall() {
+  const directionArr = ['up', 'none', 'down'];
+  const randomNum = Math.floor(Math.random() * 3);
+  player2.directionIntention = directionArr[randomNum];
+
+  directionY = player2.directionIntention;
 }
 
 function ballHitsFrame() {
@@ -125,7 +136,7 @@ function ballMove() {
         if (ball.posX + ball.side === screenWidth - player2.entityWidth) {
           if (ball.posY + ball.side >= player2.posY && ball.posY <= player2.posY + player2.height) {
             directionX = 'left';
-            paddleHitsBall();
+            paddle2HitsBall();
           }
         }
       } else {
@@ -139,7 +150,7 @@ function ballMove() {
         if (ball.posX === player1.entityWidth) {
           if (ball.posY + ball.side >= player1.posY && ball.posY <= player1.posY + player1.height) {
             directionX = 'right';
-            paddleHitsBall();
+            paddle1HitsBall();
             // Generate the bounce beep
           }
         }
@@ -165,9 +176,9 @@ function ballMove() {
       break;
   }
 
-  if (ball.posY === 0) {
+  if (ball.posY <= 0) {
     ballHitsFrame();
-  } else if (ball.posY === 380) {
+  } else if (ball.posY >= 380) {
     ballHitsFrame();
   }
 }
