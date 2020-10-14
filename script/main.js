@@ -6,7 +6,7 @@ const screenHeight = screen.height;
 const screenYHalf = screenHeight / 2;
 const screenXHalf = screenWidth / 2;
 const elementsOnScreenColor = '#FFF';
-const screenBackgroundColor = '#222';
+const backgroundScreenColor = '#222';
 const playerFrameGap = 20;
 
 // Players
@@ -32,7 +32,7 @@ const ball = {
 
 function render() {
   // Background
-  ctxScreen.fillStyle = screenBackgroundColor;
+  ctxScreen.fillStyle = backgroundScreenColor;
   ctxScreen.fillRect(0, 0, screenWidth, screenHeight);
 
   // Define the elements on screen color
@@ -54,8 +54,6 @@ function render() {
   // Ball
   ctxScreen.fillRect(ball.posX, ball.posY, ball.side, ball.side);
 }
-
-render();
 
 function playerMove(event) {
   switch (event.keyCode) {
