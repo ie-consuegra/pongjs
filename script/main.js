@@ -69,23 +69,6 @@ function render() {
   ctxScreen.fillRect(ball.posX, ball.posY, ball.side, ball.side);
 }
 
-function playerChangeDirection(event) {
-  switch (event.keyCode) {
-    case 38: // ArrowUp
-      player1.directionY = 'up';
-      break;
-    case 40: // ArrowDown
-      player1.directionY = 'down';
-      break;
-    default:
-      break;
-  }
-}
-
-function playerStopMoving() {
-  player1.directionY = 'none';
-}
-
 let directionX = 'right';
 let directionY = 'none';
 
@@ -182,10 +165,6 @@ function ballMove() {
     ballHitsFrame();
   }
 }
-
-document.addEventListener('keydown', playerChangeDirection);
-
-document.addEventListener('keyup', playerStopMoving);
 
 function computerAI() {
   player2.posY = ball.posY - 30;
