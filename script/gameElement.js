@@ -7,17 +7,20 @@ class GameElement {
     this.directionY = 'none';
     this.width = 20;
     this.height = 20;
+    this.speed = 2;
+    this.minPosY = 0;
+    this.maxPosY = 320;
   }
 
-  moveUp(value, limitValue) {
-    if (this.posY > limitValue) {
-      this.posY -= value;
+  moveUp(speed = this.speed, minPosY = this.minPosY) {
+    if (this.posY > minPosY) {
+      this.posY -= speed;
     }
   }
 
-  moveDown(value, limitValue) {
-    if (this.posY < limitValue) {
-      this.posY += value;
+  moveDown(speed = this.speed, maxPosY = this.maxPosY) {
+    if (this.posY < maxPosY) {
+      this.posY += speed;
     }
   }
 

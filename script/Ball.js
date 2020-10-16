@@ -5,6 +5,8 @@ class Ball extends GameElement {
     super(posX, posY);
     this.directionX = 'right';
     this.directionY = 'none';
+    this.minPosY = 0;
+    this.maxPosY = 380;
   }
 
   moveLeft(speed = this.speed, minPosX = this.minPosX, leftPaddle) {
@@ -12,7 +14,7 @@ class Ball extends GameElement {
       this.posX -= speed;
       if (this.posX === leftPaddle.entityWidth) {
         if (this.posY + this.height >= leftPaddle.posY && this.posY <= leftPaddle.posY + leftPaddle.height) {
-          this.hitsLeftPaddle();
+          this.hitsLeftPaddle(leftPaddle.directionIntention);
         }
       }
     } else {
@@ -26,12 +28,28 @@ class Ball extends GameElement {
       this.posX += speed;
       if (this.posX + this.width === 600 - rightPaddle.entityWidth) {
         if (this.posY + this.height >= rightPaddle.posY && this.posY <= rightPaddle.posY + rightPaddle.height) {
-          this.hitsRightPaddle();
+          this.hitsRightPaddle(rightPaddle.directionIntention);
         }
       }
     } else {
       this.goThroughRightSide();
       rightPaddle.fails();
+    }
+  }
+
+  moveUp(speed = this.speed, minPosY = this.minPosY) {
+    if (this.posY > minPosY) {
+      this.posY -= speed;
+    } else {
+      this.changeDirectionY();
+    }
+  }
+
+  moveDown(speed = this.speed, maxPosY = this.maxPosY) {
+    if (this.posY < maxPosY) {
+      this.posY += speed;
+    } else {
+      this.changeDirectionY();
     }
   }
 
@@ -75,12 +93,21 @@ class Ball extends GameElement {
     this.changeDirectionX();
   }
 
-  hitsLeftPaddle() {
+  hitsLeftPaddle(directionIntention) {
     this.changeDirectionX();
+    this.directionY = directionIntention;
   }
 
   hitsRightPaddle() {
     this.changeDirectionX();
+  }
+
+  changeDirectionY() {
+    if (this.directionY === 'up') {
+      this.directionY = 'down';
+    } else {
+      this.directionY = 'up';
+    }
   }
 }
 

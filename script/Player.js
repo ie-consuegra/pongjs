@@ -10,8 +10,10 @@ class Player extends GameElement {
 
   controlSignal(input, active) {
     if (active) {
-      // Set movement direction
+      // Set movement direction of player
       this.directionY = input;
+      // Intention of player to set the ball direction
+      this.directionIntention = input;
     } else {
       // do nothing
       this.directionY = 'none';
