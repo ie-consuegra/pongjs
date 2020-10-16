@@ -19,6 +19,7 @@ const playerFrameGap = 20;
 // Create players
 const player1 = new Player(playerFrameGap, screenYHalf - 40);
 const player2 = new Player(screenWidth - 40, screenYHalf - 40);
+player2.hasAI = true;
 
 // Ball
 const ball = new Ball(50, 180);
@@ -49,31 +50,11 @@ function render() {
   ctxScreen.fillRect(ball.posX, ball.posY, ball.width, ball.height);
 }
 
-function paddle1HitsBall() {
-  // Create an oblique blow when the paddle is moving
-  if (player1.directionY !== 'none') {
-    ball.directionY = player1.directionY;
-  }
-}
-
-function paddle2HitsBall() {
-  const directionArr = ['up', 'none', 'down'];
-  const randomNum = Math.floor(Math.random() * 3);
-  player2.directionIntention = directionArr[randomNum];
-
-  ball.directionY = player2.directionIntention;
-}
-
-function computerAI() {
-  player2.posY = ball.posY - 30;
-}
-
-
 setInterval(() => {
   // ballMove();
   ball.update([player1, player2]);
   player1.update();
-  computerAI();
+  player2.update(ball);
   render();
 }, 20);
 

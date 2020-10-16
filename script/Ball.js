@@ -14,7 +14,7 @@ class Ball extends GameElement {
       this.posX -= speed;
       if (this.posX === leftPaddle.entityWidth) {
         if (this.posY + this.height >= leftPaddle.posY && this.posY <= leftPaddle.posY + leftPaddle.height) {
-          this.hitsLeftPaddle(leftPaddle.directionIntention);
+          this.hitsLeftPaddle(leftPaddle.getDirectionIntention());
         }
       }
     } else {
@@ -28,7 +28,7 @@ class Ball extends GameElement {
       this.posX += speed;
       if (this.posX + this.width === 600 - rightPaddle.entityWidth) {
         if (this.posY + this.height >= rightPaddle.posY && this.posY <= rightPaddle.posY + rightPaddle.height) {
-          this.hitsRightPaddle(rightPaddle.directionIntention);
+          this.hitsRightPaddle(rightPaddle.getDirectionIntention());
         }
       }
     } else {
@@ -98,8 +98,9 @@ class Ball extends GameElement {
     this.directionY = directionIntention;
   }
 
-  hitsRightPaddle() {
+  hitsRightPaddle(directionIntention) {
     this.changeDirectionX();
+    this.directionY = directionIntention;
   }
 
   changeDirectionY() {

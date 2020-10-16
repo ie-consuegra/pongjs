@@ -6,6 +6,7 @@ class Player extends GameElement {
     this.height = 80;
     this.gapPlayerBoundary = 20;
     this.entityWidth = this.width + this.gapPlayerBoundary;
+    this.hasAI = false;
   }
 
   controlSignal(input, active) {
@@ -20,21 +21,36 @@ class Player extends GameElement {
     }
   }
 
-  update() {
-    switch (this.directionY) {
-      case 'up':
-        this.moveUp(5, 0); // Temporarily hardcoded 5 determines speed of movement and 0 the limit of the movement
-        break;
-      case 'down':
-        this.moveDown(5, 320);
-        break;
-      default:
-        break;
+  update(trackedBall) {
+    if (this.hasAI) {
+      // AI Tracks the ball position
+      this.posY = trackedBall.posY - 30;
+    } else {
+      switch (this.directionY) {
+        case 'up':
+          this.moveUp(5, 0); // Temporarily hardcoded 5 determines speed of movement and 0 the limit of the movement
+          break;
+        case 'down':
+          this.moveDown(5, 320);
+          break;
+        default:
+          break;
+      }
     }
   }
 
   fails() {
     console.log('La embarré');
+  }
+
+  getDirectionIntention() {
+    if (this.hasAI) {
+      // Set direction intention randomly
+      const directionArr = ['up', 'none', 'down'];
+      const randomNum = Math.floor(Math.random() * 3);
+      this.directionIntention = directionArr[randomNum];
+    }
+    return this.directionIntention;
   }
 }
 
