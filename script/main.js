@@ -1,3 +1,8 @@
+import Player from './Player.js';
+import Ball from './Ball.js';
+import Controller from './Controller.js'
+
+
 // import SoundGen from './sound';
 
 // TV
@@ -11,40 +16,12 @@ const elementsOnScreenColor = '#FFF';
 const backgroundScreenColor = '#222';
 const playerFrameGap = 20;
 
-// Players
-class Player {
-  constructor(posX, posY) {
-    this.posX = posX;
-    this.posY = posY;
-    this.width = 20;
-    this.height = 80;
-    this.entityWidth = this.width + playerFrameGap;
-  }
-
-  moveUp() {
-    if (this.posY > 0) {
-      this.posY -= 10;
-    }
-  }
-
-  moveDown() {
-    if (this.posY < 320) {
-      this.posY += 10;
-    }
-  }
-}
-
+// Create players
 const player1 = new Player(playerFrameGap, screenYHalf - 40);
 const player2 = new Player(screenWidth - 40, screenYHalf - 40);
 
 // Ball
-const ball = {
-  side: 20,
-  posX: 50,
-  posY: 180,
-  directionX: 'right',
-  directionY: 'none',
-};
+const ball = new Ball(50, 180);
 
 function render() {
   // Background
@@ -54,10 +31,11 @@ function render() {
   // Define the elements on screen color
   ctxScreen.fillStyle = elementsOnScreenColor;
 
-  // Net
-  const netWidth = 10;
-  const netHeight = 30;
-  for (let index = 0; index < screenHeight; index += 40) {
+  // Net, created by a line made by 32 dashes
+  const gapDelimiter = screenHeight / 32;
+  const netWidth = 3;
+  const netHeight = gapDelimiter - Math.floor(screenHeight / 72);
+  for (let index = 0; index < screenHeight; index += gapDelimiter) {
     ctxScreen.fillRect(screenXHalf - netWidth / 2, index, netWidth, netHeight);
   }
 
@@ -68,7 +46,7 @@ function render() {
   ctxScreen.fillRect(player2.posX, player2.posY, player2.width, player2.height);
 
   // Ball
-  ctxScreen.fillRect(ball.posX, ball.posY, ball.side, ball.side);
+  ctxScreen.fillRect(ball.posX, ball.posY, ball.width, ball.height);
 }
 
 function paddle1HitsBall() {
@@ -162,16 +140,17 @@ function computerAI() {
 
 setInterval(() => {
   ballMove();
-  switch (player1.directionY) {
-    case 'up':
-      player1.moveUp();
-      break;
-    case 'down':
-      player1.moveDown();
-      break;
-    default:
-      break;
-  }
+  player1.update();
   computerAI();
   render();
 }, 20);
+
+const controller = new Controller();
+
+window.addEventListener('keydown', (ev) => {
+  controller.keyEventHandler(ev, player1);
+});
+
+window.addEventListener('keyup', (ev) => {
+  controller.keyEventHandler(ev, player1);
+});
