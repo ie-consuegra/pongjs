@@ -139,7 +139,8 @@ function computerAI() {
 
 
 setInterval(() => {
-  ballMove();
+  // ballMove();
+  ball.update([player1, player2]);
   player1.update();
   computerAI();
   render();

@@ -4,6 +4,8 @@ class Player extends GameElement {
   constructor(posX, posY) {
     super(posX, posY);
     this.height = 80;
+    this.gapPlayerBoundary = 20;
+    this.entityWidth = this.width + this.gapPlayerBoundary;
   }
 
   controlSignal(input, active) {
@@ -27,6 +29,10 @@ class Player extends GameElement {
       default:
         break;
     }
+  }
+
+  fails() {
+    console.log('La embarré');
   }
 }
 
