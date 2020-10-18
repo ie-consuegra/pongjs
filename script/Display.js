@@ -52,12 +52,18 @@ class Display {
 
   resize(windowWidth, windowHeight) {
     // Resize keeping a 4:3 Aspect ratio
-    this.canvas.height = windowHeight;
-    this.canvas.width = Math.floor((windowHeight * 4) / 3);
-
-    if (windowWidth < this.canvas.width) {
-      this.canvas.width = windowWidth;
-      this.canvas.height = Math.floor((window.innerWidth * 3) / 4);
+    // Minimum size 640x480
+    if (windowHeight >= 480 && windowWidth >= 640) {
+      this.canvas.height = windowHeight;
+      this.canvas.width = Math.floor((windowHeight * 4) / 3);
+  
+      if (windowWidth < this.canvas.width) {
+        this.canvas.width = windowWidth;
+        this.canvas.height = Math.floor((window.innerWidth * 3) / 4);
+      }
+    } else {
+      this.canvas.width = 640;
+      this.canvas.height = 480;
     }
   }
 }
