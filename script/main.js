@@ -18,12 +18,13 @@ player2.hasAI = true;
 // Ball
 const ball = new Ball(50, 180);
 
-setInterval(() => {
+function animate() {
   ball.update([player1, player2]);
   player1.update(ball);
   player2.update(ball);
   display.render([ball, player1, player2]);
-}, 20);
+  requestAnimationFrame(animate);
+}
 
 const controller = new Controller();
 
@@ -34,3 +35,5 @@ window.addEventListener('keydown', (ev) => {
 window.addEventListener('keyup', (ev) => {
   controller.keyEventHandler(ev, player1);
 });
+
+animate();
