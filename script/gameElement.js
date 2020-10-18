@@ -5,8 +5,8 @@ class GameElement {
     this.posX = posX;
     this.posY = posY;
     this.directionY = 'none';
-    this.width = 20;
-    this.height = 20;
+    this.width = 10;
+    this.height = 10;
     this.speed = 2;
     this.minPosY = 0;
     this.maxPosY = 320;

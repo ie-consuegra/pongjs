@@ -44,14 +44,20 @@ function init() {
 
 function resize() {
   display.resize(window.innerWidth, window.innerHeight);
-  player1.maxPosY = display.canvas.height - player1.height;
-  player2.maxPosY = display.canvas.height - player2.height;
-  player2.posX = display.canvas.width - 40;
+  const areaWidth = display.canvas.width;
+  const areaHeight = display.canvas.height;
+
+  player1.maxPosY = areaHeight - player1.height;
+  player2.maxPosY = areaHeight - player2.height;
+  player2.posX = areaWidth - 40;
+
+  // Paddle resizing
+  player1.resize(areaWidth, areaHeight);
+  player2.resize(areaWidth, areaHeight);
+
   ball.maxPosX = display.canvas.width;
   ball.maxPosY = display.canvas.height - ball.height;
-  // player1.resize();
-  // player2.resize();
-  // ball.resize();
+  ball.resize(areaWidth, areaHeight);
 }
 
 window.addEventListener('resize', resize);

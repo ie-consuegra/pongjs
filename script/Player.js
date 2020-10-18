@@ -3,7 +3,7 @@ import GameElement from './gameElement.js';
 class Player extends GameElement {
   constructor(posX, posY) {
     super(posX, posY);
-    this.height = 80;
+    this.height = 40;
     this.gapPlayerBoundary = 20;
     this.entityWidth = this.width + this.gapPlayerBoundary;
     this.hasAI = false;
@@ -51,6 +51,11 @@ class Player extends GameElement {
       this.directionIntention = directionArr[randomNum];
     }
     return this.directionIntention;
+  }
+
+  resize(areaWidth, areaHeight) {
+    this.width = Math.floor((areaWidth * 10) / 640);
+    this.height = Math.floor((areaHeight * 40) / 480);
   }
 }
 

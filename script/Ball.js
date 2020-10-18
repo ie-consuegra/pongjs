@@ -110,6 +110,11 @@ class Ball extends GameElement {
       this.directionY = 'up';
     }
   }
+
+  resize(areaWidth, areaHeight) {
+    this.width = Math.floor((areaWidth * 10) / 640);
+    this.height = Math.floor((areaHeight * 10) / 480);
+  }
 }
 
 export default Ball;
