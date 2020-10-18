@@ -18,6 +18,7 @@ class Player extends GameElement {
     } else {
       // do nothing
       this.directionY = 'none';
+      this.directionIntention = 'none';
     }
   }
 
