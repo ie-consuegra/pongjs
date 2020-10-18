@@ -28,10 +28,10 @@ class Player extends GameElement {
     } else {
       switch (this.directionY) {
         case 'up':
-          this.moveUp(5, 0); // Temporarily hardcoded 5 determines speed of movement and 0 the limit of the movement
+          this.moveUp();
           break;
         case 'down':
-          this.moveDown(5, 320);
+          this.moveDown();
           break;
         default:
           break;

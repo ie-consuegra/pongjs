@@ -12,15 +12,15 @@ class GameElement {
     this.maxPosY = 320;
   }
 
-  moveUp(speed = this.speed, minPosY = this.minPosY) {
-    if (this.posY > minPosY) {
-      this.posY -= speed;
+  moveUp() {
+    if (this.posY > this.minPosY) {
+      this.posY -= this.speed;
     }
   }
 
-  moveDown(speed = this.speed, maxPosY = this.maxPosY) {
-    if (this.posY < maxPosY) {
-      this.posY += speed;
+  moveDown() {
+    if (this.posY < this.maxPosY) {
+      this.posY += this.speed;
     }
   }
 

@@ -3,14 +3,20 @@ class Display {
   constructor(width, height) {
     this.canvas = document.querySelector('canvas');
     this.canvasCtx = this.canvas.getContext('2d');
-    this.canvas.width = width;
-    this.canvas.height = height;
-    this.canvasHalfWidth = width / 2;
-    this.canvasHalfHeight = height / 2;
     this.canvasBackgroundColor = '#222';
     this.canvasElementsColor = '#FFF';
     this.draw = this.draw.bind(this);
+    this.resize = this.resize.bind(this);
+    this.resize(width, height);
     this.net = {};
+  }
+
+  getCanvasHalfWidth() {
+    return this.canvas.width / 2;
+  }
+
+  getCanvasHalfHeight() {
+    return this.canvas.height / 2;
   }
 
   render(elementsArr) {
@@ -38,17 +44,21 @@ class Display {
     this.net.height = this.net.gapDelimiter - Math.floor(this.canvas.height / 72);
 
     for (let index = 0; index < this.canvas.height; index += this.net.gapDelimiter) {
-      this.net.posX = this.canvasHalfWidth - Math.floor(this.net.width / 2);
+      this.net.posX = this.getCanvasHalfWidth() - Math.floor(this.net.width / 2);
       this.net.posY = index;
       this.draw(this.net);
     }
   }
 
-  resize() {
-    // Resize the playable area taking the heigh of the window
-    // Aspect ratio 4:3
-    this.canvas.height = window.innerHeight;
-    this.canvas.width = (window.innerWidth * 3) / 4;
+  resize(windowWidth, windowHeight) {
+    // Resize keeping a 4:3 Aspect ratio
+    this.canvas.height = windowHeight;
+    this.canvas.width = Math.floor((windowHeight * 4) / 3);
+
+    if (windowWidth < this.canvas.width) {
+      this.canvas.width = windowWidth;
+      this.canvas.height = Math.floor((window.innerWidth * 3) / 4);
+    }
   }
 }
 

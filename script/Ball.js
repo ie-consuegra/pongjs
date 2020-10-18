@@ -9,10 +9,10 @@ class Ball extends GameElement {
     this.maxPosY = 380;
   }
 
-  moveLeft(speed = this.speed, minPosX = this.minPosX, leftPaddle) {
-    if (this.posX > minPosX) {
-      this.posX -= speed;
-      if (this.posX === leftPaddle.entityWidth) {
+  moveLeft(leftPaddle) {
+    if (this.posX > this.minPosX) {
+      this.posX -= this.speed;
+      if (this.posX <= leftPaddle.entityWidth) {
         if (this.posY + this.height >= leftPaddle.posY && this.posY <= leftPaddle.posY + leftPaddle.height) {
           this.hitsLeftPaddle(leftPaddle.getDirectionIntention());
         }
@@ -23,10 +23,10 @@ class Ball extends GameElement {
     }
   }
 
-  moveRight(speed = this.speed, maxPosX = this.maxPosX, rightPaddle) {
-    if (this.posX < maxPosX) {
-      this.posX += speed;
-      if (this.posX + this.width === 600 - rightPaddle.entityWidth) {
+  moveRight(rightPaddle) {
+    if (this.posX < this.maxPosX) {
+      this.posX += this.speed;
+      if (this.posX + this.width >= this.maxPosX - rightPaddle.entityWidth) {
         if (this.posY + this.height >= rightPaddle.posY && this.posY <= rightPaddle.posY + rightPaddle.height) {
           this.hitsRightPaddle(rightPaddle.getDirectionIntention());
         }
@@ -37,17 +37,17 @@ class Ball extends GameElement {
     }
   }
 
-  moveUp(speed = this.speed, minPosY = this.minPosY) {
-    if (this.posY > minPosY) {
-      this.posY -= speed;
+  moveUp() {
+    if (this.posY > this.minPosY) {
+      this.posY -= this.speed;
     } else {
       this.changeDirectionY();
     }
   }
 
-  moveDown(speed = this.speed, maxPosY = this.maxPosY) {
-    if (this.posY < maxPosY) {
-      this.posY += speed;
+  moveDown() {
+    if (this.posY < this.maxPosY) {
+      this.posY += this.speed;
     } else {
       this.changeDirectionY();
     }
@@ -67,10 +67,10 @@ class Ball extends GameElement {
 
     switch (this.directionX) {
       case 'left':
-        this.moveLeft(5, 0, paddlesArr[0]);
+        this.moveLeft(paddlesArr[0]);
         break;
       case 'right':
-        this.moveRight(5, 600, paddlesArr[1]);
+        this.moveRight(paddlesArr[1]);
         break;
       default:
         break;
