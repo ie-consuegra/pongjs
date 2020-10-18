@@ -43,6 +43,13 @@ class Display {
       this.draw(this.net);
     }
   }
+
+  resize() {
+    // Resize the playable area taking the heigh of the window
+    // Aspect ratio 4:3
+    this.canvas.height = window.innerHeight;
+    this.canvas.width = (window.innerWidth * 3) / 4;
+  }
 }
 
 export default Display;
