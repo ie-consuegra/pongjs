@@ -42,7 +42,7 @@ class Ball extends GameElement {
       this.posY -= this.speed;
     } else {
       this.changeDirectionY();
-      soundGen.wave(247, 'sine').play(50);
+      soundGen.wave(247, 'square').play(30);
     }
   }
 
@@ -51,7 +51,7 @@ class Ball extends GameElement {
       this.posY += this.speed;
     } else {
       this.changeDirectionY();
-      soundGen.wave(247, 'sine').play(50);
+      soundGen.wave(247, 'square').play(30);
     }
   }
 
@@ -103,14 +103,14 @@ class Ball extends GameElement {
     this.changeDirectionX();
     this.directionY = directionIntention;
     // Beep a C3 tone type: sine 50 ms long
-    soundGen.wave(494, 'sine').play(50);
+    soundGen.wave(494, 'square').play(30);
   }
 
   hitsRightPaddle(directionIntention) {
     this.changeDirectionX();
     this.directionY = directionIntention;
     // Beep a C3 tone type: sine 50 ms long
-    soundGen.wave(494, 'sine').play(50);
+    soundGen.wave(494, 'square').play(30);
   }
 
   changeDirectionY() {
