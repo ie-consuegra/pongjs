@@ -19,7 +19,7 @@ class Ball extends GameElement {
       }
     } else {
       this.goThroughLeftSide();
-      leftPaddle.fails();
+      // leftPaddle.fails();
     }
   }
 
@@ -33,7 +33,7 @@ class Ball extends GameElement {
       }
     } else {
       this.goThroughRightSide();
-      rightPaddle.fails();
+      // rightPaddle.fails();
     }
   }
 
@@ -42,6 +42,7 @@ class Ball extends GameElement {
       this.posY -= this.speed;
     } else {
       this.changeDirectionY();
+      soundGen.wave(247, 'sine').play(50);
     }
   }
 
@@ -50,6 +51,7 @@ class Ball extends GameElement {
       this.posY += this.speed;
     } else {
       this.changeDirectionY();
+      soundGen.wave(247, 'sine').play(50);
     }
   }
 
@@ -87,20 +89,28 @@ class Ball extends GameElement {
 
   goThroughLeftSide() {
     this.changeDirectionX();
+    // Fail beep
+    soundGen.wave(247, 'sawtooth').play(300);
   }
 
   goThroughRightSide() {
     this.changeDirectionX();
+    // Fail beep
+    soundGen.wave(247, 'sawtooth').play(300);
   }
 
   hitsLeftPaddle(directionIntention) {
     this.changeDirectionX();
     this.directionY = directionIntention;
+    // Beep a C3 tone type: sine 50 ms long
+    soundGen.wave(494, 'sine').play(50);
   }
 
   hitsRightPaddle(directionIntention) {
     this.changeDirectionX();
     this.directionY = directionIntention;
+    // Beep a C3 tone type: sine 50 ms long
+    soundGen.wave(494, 'sine').play(50);
   }
 
   changeDirectionY() {

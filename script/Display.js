@@ -56,7 +56,7 @@ class Display {
     if (windowHeight >= 480 && windowWidth >= 640) {
       this.canvas.height = windowHeight;
       this.canvas.width = Math.floor((windowHeight * 4) / 3);
-  
+
       if (windowWidth < this.canvas.width) {
         this.canvas.width = windowWidth;
         this.canvas.height = Math.floor((window.innerWidth * 3) / 4);

@@ -70,6 +70,9 @@ function init() {
   ball.resize(areaWidth, areaHeight);
 }
 
+display.canvas.addEventListener('dblclick', () => {
+  soundGen.toggle();
+});
 
 window.addEventListener('resize', init);
 init();

@@ -38,10 +38,6 @@ class Player extends GameElement {
     }
   }
 
-  fails() {
-    console.log('La embarré');
-  }
-
   getDirectionIntention() {
     if (this.hasAI) {
       // Set direction intention randomly
