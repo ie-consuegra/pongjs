@@ -12,7 +12,7 @@ class Ball extends GameElement {
   moveLeft(leftPaddle) {
     if (this.posX > this.minPosX) {
       this.posX -= this.speed;
-      if (this.posX <= leftPaddle.entityWidth) {
+      if (this.posX <= leftPaddle.posX + leftPaddle.width) {
         if (this.posY + this.height >= leftPaddle.posY && this.posY <= leftPaddle.posY + leftPaddle.height) {
           this.hitsLeftPaddle(leftPaddle.getDirectionIntention());
         }
@@ -26,7 +26,7 @@ class Ball extends GameElement {
   moveRight(rightPaddle) {
     if (this.posX < this.maxPosX) {
       this.posX += this.speed;
-      if (this.posX + this.width >= this.maxPosX - rightPaddle.entityWidth) {
+      if (this.posX + this.width >= rightPaddle.posX) {
         if (this.posY + this.height >= rightPaddle.posY && this.posY <= rightPaddle.posY + rightPaddle.height) {
           this.hitsRightPaddle(rightPaddle.getDirectionIntention());
         }

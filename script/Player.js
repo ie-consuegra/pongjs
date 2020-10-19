@@ -5,7 +5,6 @@ class Player extends GameElement {
     super(posX, posY);
     this.height = 40;
     this.gapPlayerBoundary = 20;
-    this.entityWidth = this.width + this.gapPlayerBoundary;
     this.hasAI = false;
   }
 
