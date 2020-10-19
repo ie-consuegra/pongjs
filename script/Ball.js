@@ -1,9 +1,9 @@
 import GameElement from './gameElement.js';
 
 class Ball extends GameElement {
-  constructor(posX, posY) {
-    super(posX, posY);
-    this.directionX = 'right';
+  constructor() {
+    super();
+    this.directionX = 'left';
     this.directionY = 'none';
     this.minPosY = 0;
     this.maxPosY = 380;

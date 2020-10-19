@@ -1,10 +1,9 @@
 import GameElement from './gameElement.js';
 
 class Player extends GameElement {
-  constructor(posX, posY) {
-    super(posX, posY);
+  constructor() {
+    super();
     this.height = 40;
-    this.gapPlayerBoundary = 20;
     this.hasAI = false;
   }
 
@@ -24,7 +23,7 @@ class Player extends GameElement {
   update(trackedBall) {
     if (this.hasAI) {
       // AI Tracks the ball position
-      this.posY = trackedBall.posY - 30;
+      this.posY = Math.floor(trackedBall.posY - ((this.height / 2) - (trackedBall.height / 2)));
     } else {
       switch (this.directionY) {
         case 'up':

@@ -1,9 +1,9 @@
 // Class with properties and method of every movable element in the game
 
 class GameElement {
-  constructor(posX, posY) {
-    this.posX = posX;
-    this.posY = posY;
+  constructor() {
+    this.posX = 0;
+    this.posY = 0;
     this.directionY = 'none';
     this.width = 10;
     this.height = 10;
