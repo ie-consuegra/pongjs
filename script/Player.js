@@ -5,6 +5,7 @@ class Player extends GameElement {
     super();
     this.height = 40;
     this.hasAI = false;
+    this.score = 0;
   }
 
   controlSignal(input, active) {
@@ -25,7 +26,7 @@ class Player extends GameElement {
       // AI Tracks the ball position
       this.posY = Math.floor(trackedBall.posY - ((this.height / 2) - (trackedBall.height / 2)));
     } else {
-      switch (this.directionY) {
+      switch (this.Ydirection) {
         case 'up':
           this.moveUp();
           break;
@@ -48,9 +49,8 @@ class Player extends GameElement {
     return this.directionIntention;
   }
 
-  resize(areaWidth, areaHeight) {
-    this.width = Math.floor((areaWidth * 10) / 640);
-    this.height = Math.floor((areaHeight * 40) / 480);
+  increaseScore() {
+    this.score += 1;
   }
 }
 
