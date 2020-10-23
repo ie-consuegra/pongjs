@@ -7,6 +7,8 @@ class Game {
   constructor(windowWidth, windowHeight) {
     // System
     this.display = new Display(windowWidth, windowHeight);
+    this.windowWidth = windowWidth;
+    this.windowHeight = windowHeight;
     this.soundGen = new SoundGenerator();
     this.controller = {
       key: '',
@@ -32,6 +34,8 @@ class Game {
       }
     } else {
       this.ballVerticalBoundary();
+      this.player2.increaseScore();
+      console.log (this.player2.score);
       // player1 fails, increase player2 score
       // reset speed
     }
@@ -47,6 +51,7 @@ class Game {
       }
     } else {
       this.ballVerticalBoundary();
+      this.player1.increaseScore();
       // player2 fails, increase player1 score
       // reset speed
     }
@@ -63,6 +68,8 @@ class Game {
   // ball events
   ballPaddle() {
     // Take into account direction intention
+    this.ball.increaseSpeed();
+    this.player1.increaseSpeed();
     this.ball.changeXdirection();
     this.ballPaddleSoundEffect();
   }
@@ -75,8 +82,24 @@ class Game {
   ballVerticalBoundary() {
     // Detect who fails
     // Sound efect
-    this.ball.changeXdirection(); // temporary
+    // Ball disappears
+    this.ball.posX = this.display.getCanvasHalfHeight();
+    this.ball.posY = this.display.getCanvasHalfHeight();
+    this.ball.width = 0;
+    this.ball.Xdirection = 'none';
+    this.ball.Ydirection = 'none';
+    this.ball.resetSpeed();
+    this.ballAppears = this.ballAppears.bind(this);
+    setTimeout(this.ballAppears, 2000);
+
+    this.player1.resetSpeed();
     this.BallVerticalBoundarySoundEffect();
+  }
+
+  ballAppears() {
+    this.resize();
+    this.ball.Xdirection = 'left';
+    this.ball.Ydirection = 'up';
   }
 
   // Control methods
@@ -115,18 +138,41 @@ class Game {
   }
 
   update() {
+    this.detectBallCollisions();
     this.ball.update();
     this.player1.update();
     this.player2.update(this.ball);
-    this.detectBallCollisions();
-    this.display.render([this.ball, this.player1, this.player2]);
+    this.display.render([this.player1, this.player2, this.ball]);
   }
 
-  resize(windowWidth, windowHeight) {
+  resize(windowWidth = this.windowWidth, windowHeight = this.windowHeight) {
     this.display.resize(windowWidth, windowHeight);
     this.player1.resize(windowWidth, windowHeight);
     this.player2.resize(windowWidth, windowHeight);
     this.ball.resize(windowWidth, windowHeight);
+    this.relocateElements();
+  }
+
+  relocateElements() {
+    this.display.padding = [Math.floor(this.display.canvas.width / 8), 10];
+
+    this.player1.posX = this.display.padding[0];
+    this.player2.posX = this.display.canvas.width - (this.player2.width + this.display.padding[0]);
+    // Set the elements in the middle of the area (Y axis)
+    this.player1.posY = this.display.getCanvasHalfHeight() - Math.floor(this.player1.height / 2);
+    this.player2.posY = this.display.getCanvasHalfHeight() - Math.floor(this.player2.height / 2);
+    this.ball.minPosX = 0;
+    this.ball.posX = this.display.getCanvasHalfWidth() - this.ball.width;
+    this.ball.posY = this.display.getCanvasHalfHeight() - Math.floor(this.ball.height / 2);
+
+    const areaHeight = this.display.canvas.height;
+
+    this.player1.maxPosY = areaHeight - this.player1.height;
+    this.player2.maxPosY = areaHeight - this.player2.height;
+
+    this.ball.minPosX = this.player1.posX;
+    this.ball.maxPosX = this.player2.posX + this.player2.width;
+    this.ball.maxPosY = this.display.canvas.height - this.ball.height;
   }
 
   // --- Sound effects methods ---
@@ -149,29 +195,16 @@ class Game {
   init() {
     // Initial configuration
     // PLAYERS
-    this.display.padding = [Math.floor(this.display.canvas.width / 8), 10];
     this.player2.hasAI = true;
     // Set the position of player1 and player2 (X axis)
-    this.player1.posX = this.display.padding[0];
-    this.player2.posX = this.display.canvas.width - (this.player2.width + this.display.padding[0]);
-    // Set the elements in the middle of the area (Y axis)
-    this.player1.posY = this.display.getCanvasHalfHeight() - Math.floor(this.player1.height / 2);
-    this.player2.posY = this.display.getCanvasHalfHeight() - Math.floor(this.player2.height / 2);
+    this.player1.minHeight = 40;
+    this.player2.minHeight = 40;
     // Set the initial properties of the ball
-    this.ball.minPosX = 0;
+    this.ball.minHeight = 10;
+    this.ball.minWidth = 10;
     this.ball.Xdirection = 'left';
     this.ball.Ydirection = 'down';
-    this.ball.posX = this.display.getCanvasHalfWidth() - this.ball.width;
-    this.ball.posY = this.display.getCanvasHalfHeight() - Math.floor(this.ball.height / 2);
-
-    // RESIZING
-    const areaHeight = this.display.canvas.height;
-
-    this.player1.maxPosY = areaHeight - this.player1.height;
-    this.player2.maxPosY = areaHeight - this.player2.height;
-
-    this.ball.maxPosX = this.display.canvas.width;
-    this.ball.maxPosY = this.display.canvas.height - this.ball.height;
+    this.resize();
   }
 }
 

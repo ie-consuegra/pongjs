@@ -16,6 +16,7 @@ class GameElement {
     this.maxPosY = 320;
     this.Xdirection = 'none';
     this.Ydirection = 'none';
+    this.initVariationPerFrame = 2;
     this.variationPerFrame = 2;
   }
 
@@ -59,6 +60,14 @@ class GameElement {
     } else if (this.Ydirection === 'down') {
       this.Ydirection = 'up';
     }
+  }
+
+  increaseSpeed() {
+    this.variationPerFrame += 1;
+  }
+
+  resetSpeed() {
+    this.variationPerFrame = this.initVariationPerFrame;
   }
 
   update() {

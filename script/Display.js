@@ -1,22 +1,20 @@
 
 class Display {
-  constructor(width, height) {
+  constructor() {
     this.canvas = document.querySelector('canvas');
     this.canvasCtx = this.canvas.getContext('2d');
     this.canvasBackgroundColor = '#222';
     this.canvasElementsColor = '#FFF';
     this.draw = this.draw.bind(this);
-    this.resize = this.resize.bind(this);
-    this.resize(width, height);
     this.net = {};
   }
 
   getCanvasHalfWidth() {
-    return this.canvas.width / 2;
+    return Math.floor(this.canvas.width / 2);
   }
 
   getCanvasHalfHeight() {
-    return this.canvas.height / 2;
+    return Math.floor(this.canvas.height / 2);
   }
 
   render(elementsArr) {

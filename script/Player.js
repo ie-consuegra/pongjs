@@ -6,6 +6,8 @@ class Player extends GameElement {
     this.height = 40;
     this.hasAI = false;
     this.score = 0;
+    this.variationPerFrame = 5;
+    this.iniVariationPerFrame = 5;
   }
 
   controlSignal(input, active) {
